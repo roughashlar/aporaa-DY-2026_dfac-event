@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APORAA - Dinner For A Cause Registration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #031B33;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* ----------------------------------------------------
+           BACKGROUND BANNER DESIGN (Identical Replica Layout)
+        ---------------------------------------------------- */
+        .banner-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: linear-gradient(180deg, #031B33 0%, #05264C 100%);
+            overflow: hidden;
+            opacity: 0.25; /* Softened to keep form elements highly readable */
+        }
+
+        .top-right-curves {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60vw;
+            height: 60vh;
+            border-bottom-left-radius: 100%;
+            border-bottom: 3px solid #D4AF37;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.05) 0%, transparent 70%);
+        }
+
+        .bottom-left-curves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40vw;
+            height: 40vh;
+            border-top-right-radius: 100%;
+            border-top: 3px solid #D4AF37;
+        }
+
+        /* ----------------------------------------------------
+           MAIN INTERACTIVE APPR_CARD CONTAINER
+        ---------------------------------------------------- */
+        .main-card {
+            background: rgba(4, 28, 54, 0.9);
+            border: 2px solid #D4AF37;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Header Style mirroring the physical banner banner ribbon */
+        .header-ribbon {
+            background: linear-gradient(180deg, #0B417B 0%, #05264C 100%);
+            border: 1.5px solid #D4AF37;
+            padding: 15px;
+            text-align: center;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .org-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #FCDA6C;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .org-subtitle {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .event-title-area {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .event-main {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .event-sub {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFEAA7 0%, #D4AF37 50%, #957518 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        /* Interactive Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #FCDA6C;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(3, 27, 51, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 6px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Payment Segment Styling */
+        .payment-options-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .option-card {
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            background: rgba(3, 27, 51, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .option-card:hover {
+            border-color: #D4AF37;
+            background: rgba(11, 65, 123, 0.3);
+        }
+
+        .option-card input[type="radio"] {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            accent-color: #D4AF37;
+        }
+
+        .option-card.selected {
+            border: 2px solid #D4AF37;
+            background: rgba(11, 65, 123, 0.5);
+        }
+
+        .option-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .option-desc {
+            font-size: 0.75rem;
+            color: #A0B2C6;
+            line-height: 1.3;
+        }
+
+        /* Dynamic Payment Panel (QR Display Window) */
+        .qr-payment-panel {
+            display: none;
+            background: #ffffff;
+            color: #031B33;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 25px;
+            text-align: center;
+            border-top: 4px solid #D4AF37;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .qr-code-placeholder {
+            width: 160px;
+            height: 160px;
+            margin: 15px auto;
+            background: #f0f0f0;
+            border: 2px solid #031B33;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Simulating a professional scanning vector code interface */
+        .qr-code-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background-image: linear-gradient(45deg, #000 25%, transparent 25%), linear-gradient(-45deg, #000 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #000 75%), linear-gradient(-45deg, transparent 75%, #000 75%);
+            background-size: 20px 20px;
+            opacity: 0.8;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(180deg, #D4AF37 0%, #957518 100%);
+            color: #031B33;
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Venue Host Footer Area identical to Banner design */
+        .venue-host-footer {
+            margin-top: 25px;
+            background: #ffffff;
+            color: #031B33;
+            border-radius: 6px;
+            border: 1.5px solid #D4AF37;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .vh-logo {
+            font-weight: 900;
+            font-size: 1.1rem;
+            line-height: 1;
+            padding-right: 15px;
+            border-right: 1px dashed #A0B2C6;
+            text-align: center;
+            min-width: 130px;
+        }
+
+        .vh-logo span {
+            font-size: 0.65rem;
+            display: block;
+            color: #556677;
+            font-weight: 700;
+        }
+
+        .vh-text {
+            padding-left: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #031B33;
+        }
+
+        .vh-text span {
+            display: block;
+            font-weight: 400;
+            color: #666666;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Embedded Theme Background -->
+    <div class="banner-bg-container">
+        <div class="top-right-curves"></div>
+        <div class="bottom-left-curves"></div>
+        <div class="network-nodes"></div>
+    </div>
+
+    <!-- Active Card Frame -->
+    <main class="main-card">
+        <header class="header-ribbon">
+            <h1 class="org-title">Alpha Phi Omega</h1>
+            <p class="org-subtitle">Riyadh Alumni Association</p>
+        </header>
+
+        <div class="event-title-area">
+            <h2 class="event-main">DINNER</h2>
+            <div class="event-sub">For A Cause</div>
+        </div>
+
+        <!-- Registration & Gateway Form -->
+        <form id="registrationForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+                <label for="fullName">Full Name (For Certificate of Appreciation)</label>
+                <input type="text" id="fullName" required placeholder="e.g. John Doe">
+            </div>
+
+            <div class="form-group">
+                <label for="emailAddress">Email Address (For Invoice & Certificate Delivery)</label>
+                <input type="email" id="emailAddress" required placeholder="name@example.com">
+            </div>
+
+            <div class="form-group">
+                <label>Select Payment Settlement Method</label>
+                <div class="payment-options-box">
+                    <div class="option-card" id="optionACard" onclick="selectPaymentOption('A')">
+                        <input type="radio" id="optionA" name="paymentOption" value="A" required>
+                        <div class="option-title">Proceed to Pay Online</div>
+                        <div class="option-desc">Scan QR instantly. Receives automated official invoice receipt and Certificate token via email.</div>
+                    </div>
+                    <div class="option-card" id="optionBCard" onclick="selectPaymentOption('B')">
+                        <input type="radio" id="optionB" name="paymentOption" value="B">
+                        <div class="option-title">Pay at the Venue</div>
+                        <div class="option-desc">Settle your seat amount physically at the check-in desk upon entry into the venue hall.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contextual Direct QR Bank Box -->
+            <div class="qr-payment-panel" id="qrPanel">
+                <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">Direct Host Bank Secure Link</strong>
+                <div class="qr-code-placeholder"></div>
+                <p style="font-size: 0.8rem; font-weight: 600; color: #556677;">Scan with your banking app to transfer entry fee securely into the host account.</p>
+            </div>
+
+            <button type="submit" class="submit-btn">Confirm Registration</button>
+        </form>
+
+        <!-- Dynamic Brand Footer matching banner metadata -->
+        <footer class="venue-host-footer">
+            <div class="vh-logo">
+                KUYS
+                <span>RESTAURANT</span>
+            </div>
+            <div class="vh-text">
+                VENUE HOST <span>Where the activity will take place: Sulaimaniyah, Riyadh</span>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function selectPaymentOption(type) {
+            // Reset styles
+            document.getElementById('optionACard').classList.remove('selected');
+            document.getElementById('optionBCard').classList.remove('selected');
+            document.getElementById('option' + type).checked = true;
+            document.getElementById('option' + type + 'Card').classList.add('selected');
+
+            // Toggle QR Window
+            const qrPanel = document.getElementById('qrPanel');
+            if (type === 'A') {
+                qrPanel.style.display = 'block';
+            } else {
+                qrPanel.style.display = 'none';
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('emailAddress').value;
+            const option = document.querySelector('input[name="paymentOption"]:checked').value;
+
+            if (option === 'A') {
+                alert(`Thank you, ${name}! Your registration data has been safely logged. Once our bank module validates your transaction, your official receipt invoice alongside your personalized Certificate of Appreciation will be delivered to: ${email}`);
+            } else {
+                alert(`Registration confirmed, ${name}! Your entry code has been reserved. Please ensure to present this booking confirmation window at the desk inside Kuy's Restaurant to settle your payment.`);
+            }
+        }
+    </script>
+</body>
+</html>
