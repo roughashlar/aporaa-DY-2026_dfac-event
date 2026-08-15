@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APORAA - Dinner For A Cause Registration</title>
+    <title>APO Riyadh - Dinner For A Cause Registration</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap');
 
@@ -226,27 +226,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .qr-code-placeholder {
-            width: 160px;
-            height: 160px;
+        .qr-code-img {
+            width: 180px;
+            height: 180px;
             margin: 15px auto;
-            background: #f0f0f0;
             border: 2px solid #031B33;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        /* Simulating a professional scanning vector code interface */
-        .qr-code-placeholder::before {
-            content: '';
-            position: absolute;
-            width: 140px;
-            height: 140px;
-            background-image: linear-gradient(45deg, #000 25%, transparent 25%), linear-gradient(-45deg, #000 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #000 75%), linear-gradient(-45deg, transparent 75%, #000 75%);
-            background-size: 20px 20px;
-            opacity: 0.8;
+            border-radius: 6px;
+            display: block;
+            object-fit: contain;
         }
 
         .submit-btn {
@@ -367,7 +354,7 @@
             <!-- Contextual Direct QR Bank Box -->
             <div class="qr-payment-panel" id="qrPanel">
                 <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">Direct Host Bank Secure Link</strong>
-                <div class="qr-code-placeholder"></div>
+                <img class="qr-code-img" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAEAAQABAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=" alt="Payment QR Code">
                 <p style="font-size: 0.8rem; font-weight: 600; color: #556677;">Scan with your banking app to transfer entry fee securely into the host account.</p>
             </div>
 
