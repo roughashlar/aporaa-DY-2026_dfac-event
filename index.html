@@ -1,3 +1,15 @@
+/* ------------------------------------------------------------------------
+   ------------------------------------------------------------------------     
+	PROJECT NAME : APORAA DFAC DY 2026
+	PROJECT CODE : APORAA-DFAC-DY-2026
+	PROJECT PHASE: SIGNED-OFF
+	SYSTEM|APPLICATION TYPE:Integrations and Automation (The Platform)
+	CONDITION : ACTIVE / LIVE ENVIRONMENT
+	COMPLETION DATE: AUGUST 16, 2026 
+	BUILDER|DEVELOPER: APORAA VPI - DY.2026
+   ------------------------------------------------------------------------
+   ------------------------------------------------------------------------ */
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -406,49 +418,53 @@
         <!-- Registration & Gateway Form -->
         <form id="registrationForm" onsubmit="handleFormSubmit(event)">
             <div class="form-group">
-                <label for="fullName">Full Name (For Certificate of Appreciation)</label>
-                <input type="text" id="fullName" required placeholder="e.g. John Doe">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" required placeholder="e.g. JUAN DELA CRUZ">
             </div>
 
             <div class="form-group">
-                <label for="emailAddress">Email Address (For Invoice & Certificate Delivery)</label>
+                <label for="emailAddress">Email Address</label>
                 <input type="email" id="emailAddress" required placeholder="name@example.com">
             </div>
 
             <div class="form-group">
-                <label>Select Payment Settlement Method</label>
+                <label>Select Payment Settlement Method (TICKET PRICE SAR 129)</label>
                 <div class="payment-options-box">
                     <div class="option-card" id="optionACard" onclick="selectPaymentOption('A')">
                         <input type="radio" id="optionA" name="paymentOption" value="A" required>
                         <div class="option-title">Proceed to Pay Online</div>
-                        <div class="option-desc">Scan QR instantly. Receives automated official invoice receipt and Certificate token via email.</div>
+                        <div class="option-desc">Receives automated official invoice receipt via email.</div>
                     </div>
                     <div class="option-card" id="optionBCard" onclick="selectPaymentOption('B')">
                         <input type="radio" id="optionB" name="paymentOption" value="B">
                         <div class="option-title">Pay at the Venue</div>
-                        <div class="option-desc">Settle your seat amount physically at the check-in desk upon entry into the venue hall.</div>
+                        <div class="option-desc">Settle your seat amount physically at the check-in desk upon entry into the Restaurant.</div>
                     </div>
                 </div>
             </div>
 
             <!-- Contextual Direct QR Bank Box & Integrated Customer Account Information -->
             <div class="qr-payment-panel" id="qrPanel">
-                <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">Direct Host Bank Secure Link</strong>
+                <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">Direct Host Bank</strong>
                 
                 <!-- Embedded STC Bank Account Details -->
                 <div class="stc-bank-card">
                     <div class="stc-header">
                         <div class="stc-header-title">
-                            <div class="stc-header-title-ar">معلومات حساب العملاء</div>
-                            <div class="stc-header-title-en">Customer Account Information</div>
+/*
+<div class="stc-header-title-ar">معلومات حساب العملاء</div> 
+*/
+                            <div class="stc-header-title-en">Account Information</div>
                         </div>
                     </div>
                     <div class="stc-details-container">
                         <div class="stc-detail-row">
                             <div class="stc-value-box">JAN FRANCIS INGAY</div>
                             <div class="stc-label-box">
-                                <div class="stc-label-ar">إسم العميل</div>
-                                <div class="stc-label-en">Customer name</div>
+/*
+<div class="stc-label-ar">إسم العميل</div>
+*/
+                                <div class="stc-label-en">Host name</div>
                             </div>
                         </div>
                         <div class="stc-detail-row">
@@ -479,7 +495,7 @@
                 <span>RESTAURANT</span>
             </div>
             <div class="vh-text">
-                VENUE HOST <span>Where the activity will take place: Sulaimaniyah, Riyadh</span>
+                VENUE HOST <span>Location: Sulaimaniyah, Riyadh KSA</span>
             </div>
         </footer>
     </main>
@@ -508,7 +524,7 @@
             const option = document.querySelector('input[name="paymentOption"]:checked').value;
 
             if (option === 'A') {
-                alert(`Thank you, ${name}! Your registration data has been safely logged. Once our bank module validates your transaction, your official receipt invoice alongside your personalized Certificate of Appreciation will be delivered to: ${email}`);
+                alert(`Thank you, ${name}! Your registration data has been safely logged. Show proof of payment transaction on the venue, Official receipt invoice will be delivered to: ${email}`);
             } else {
                 alert(`Registration confirmed, ${name}! Your entry code has been reserved. Please ensure to present this booking confirmation window at the desk inside Kuy's Restaurant to settle your payment.`);
             }
