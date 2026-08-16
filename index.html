@@ -208,7 +208,7 @@
             line-height: 1.3;
         }
 
-        /* Dynamic Payment Panel (QR Display Window) */
+        /* Dynamic Payment Panel (QR Display Window & STC Bank Details) */
         .qr-payment-panel {
             display: none;
             background: #ffffff;
@@ -234,6 +234,86 @@
             border-radius: 6px;
             display: block;
             object-fit: contain;
+        }
+
+        /* STC Bank Details Component Styling */
+        .stc-bank-card {
+            background-color: #ffffff;
+            width: 100%;
+            padding: 15px 0 5px 0;
+            border-top: 1px dashed #dddddd;
+            margin-top: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: left;
+        }
+
+        .stc-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eeeeee;
+            margin-bottom: 15px;
+        }
+
+        .stc-header-title {
+            text-align: right;
+            color: #4f008c;
+        }
+
+        .stc-header-title-ar {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .stc-header-title-en {
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .stc-details-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stc-detail-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stc-value-box {
+            background-color: #fcf8fa;
+            border: 1px solid #f8eff4;
+            border-radius: 4px;
+            flex-grow: 1;
+            padding: 10px 12px;
+            text-align: center;
+            color: #666666;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            word-break: break-all;
+        }
+
+        .stc-label-box {
+            width: 140px;
+            text-align: right;
+            padding-left: 10px;
+            color: #333333;
+            flex-shrink: 0;
+        }
+
+        .stc-label-ar {
+            font-size: 13px;
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+
+        .stc-label-en {
+            font-size: 12px;
+            color: #555555;
         }
 
         .submit-btn {
@@ -326,22 +406,22 @@
         <!-- Registration & Gateway Form -->
         <form id="registrationForm" onsubmit="handleFormSubmit(event)">
             <div class="form-group">
-                <label for="fullName">Full Name</label>
+                <label for="fullName">Full Name (For Certificate of Appreciation)</label>
                 <input type="text" id="fullName" required placeholder="e.g. John Doe">
             </div>
 
             <div class="form-group">
-                <label for="emailAddress">Email Address</label>
+                <label for="emailAddress">Email Address (For Invoice & Certificate Delivery)</label>
                 <input type="email" id="emailAddress" required placeholder="name@example.com">
             </div>
 
             <div class="form-group">
-                <label>Select Payment Method</label>
+                <label>Select Payment Settlement Method</label>
                 <div class="payment-options-box">
                     <div class="option-card" id="optionACard" onclick="selectPaymentOption('A')">
                         <input type="radio" id="optionA" name="paymentOption" value="A" required>
                         <div class="option-title">Proceed to Pay Online</div>
-                        <div class="option-desc">Scan QR-CODE for Payment.</div>
+                        <div class="option-desc">Scan QR instantly. Receives automated official invoice receipt and Certificate token via email.</div>
                     </div>
                     <div class="option-card" id="optionBCard" onclick="selectPaymentOption('B')">
                         <input type="radio" id="optionB" name="paymentOption" value="B">
@@ -351,11 +431,42 @@
                 </div>
             </div>
 
-            <!-- Contextual Direct QR Bank Box -->
+            <!-- Contextual Direct QR Bank Box & Integrated Customer Account Information -->
             <div class="qr-payment-panel" id="qrPanel">
                 <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">Direct Host Bank Secure Link</strong>
-                <img class="qr-code-img" src="https://www.canva.com/design/DAHSaCFgyuM/bs_9qqwejptmE2PD1Dh9Sw/view" alt="Payment QR Code">
-                <p style="font-size: 0.8rem; font-weight: 600; color: #556677;">BANK INFORMATION.</p>
+                
+                <!-- Embedded STC Bank Account Details -->
+                <div class="stc-bank-card">
+                    <div class="stc-header">
+                        <div class="stc-header-title">
+                            <div class="stc-header-title-ar">معلومات حساب العملاء</div>
+                            <div class="stc-header-title-en">Customer Account Information</div>
+                        </div>
+                    </div>
+                    <div class="stc-details-container">
+                        <div class="stc-detail-row">
+                            <div class="stc-value-box">JAN FRANCIS INGAY</div>
+                            <div class="stc-label-box">
+                                <div class="stc-label-ar">إسم العميل</div>
+                                <div class="stc-label-en">Customer name</div>
+                            </div>
+                        </div>
+                        <div class="stc-detail-row">
+                            <div class="stc-value-box">1014335637</div>
+                            <div class="stc-label-box">
+                                <div class="stc-label-ar">رقم الحساب</div>
+                                <div class="stc-label-en">Account number</div>
+                            </div>
+                        </div>
+                        <div class="stc-detail-row">
+                            <div class="stc-value-box">SA377800000001014335637</div>
+                            <div class="stc-label-box">
+                                <div class="stc-label-ar">رقم الحساب ايبان</div>
+                                <div class="stc-label-en">Account IBAN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <button type="submit" class="submit-btn">Confirm Registration</button>
@@ -397,7 +508,7 @@
             const option = document.querySelector('input[name="paymentOption"]:checked').value;
 
             if (option === 'A') {
-                alert(`Thank you, ${name}! Your registration data has been safely logged. Once our bank module validates your transaction, your official receipt invoice will be delivered to: ${email}`);
+                alert(`Thank you, ${name}! Your registration data has been safely logged. Once our bank module validates your transaction, your official receipt invoice alongside your personalized Certificate of Appreciation will be delivered to: ${email}`);
             } else {
                 alert(`Registration confirmed, ${name}! Your entry code has been reserved. Please ensure to present this booking confirmation window at the desk inside Kuy's Restaurant to settle your payment.`);
             }
