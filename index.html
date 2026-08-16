@@ -446,7 +446,7 @@
                 <div class="stc-bank-card">
                     <div class="stc-header">
                         <div class="stc-header-title">
-			    //<div class="stc-header-title-ar">معلومات حساب العملاء</div> 
+                            <!-- <div class="stc-header-title-ar">معلومات حساب العملاء</div> --> 
                             <div class="stc-header-title-en">Account Information</div>
                         </div>
                     </div>
@@ -454,7 +454,7 @@
                         <div class="stc-detail-row">
                             <div class="stc-value-box">JAN FRANCIS INGAY</div>
                             <div class="stc-label-box">
-				//<div class="stc-label-ar">إسم العميل</div>
+                                <!-- <div class="stc-label-ar">إسم العميل</div> -->
                                 <div class="stc-label-en">Host name</div>
                             </div>
                         </div>
@@ -492,6 +492,9 @@
     </main>
 
     <script>
+        // Google Apps Script Web App Deployment URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxjYe6RoGIN2mETLjVHzbUnQsIKbeIRP3HiJNyfMqwnv6MuLjI81w4tA9aTWSIv82x83Q/exec';
+
         function selectPaymentOption(type) {
             // Reset styles
             document.getElementById('optionACard').classList.remove('selected');
@@ -508,16 +511,53 @@
             }
         }
 
-        function handleFormSubmit(e) {
+        async function handleFormSubmit(e) {
             e.preventDefault();
+
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+
             const name = document.getElementById('fullName').value;
             const email = document.getElementById('emailAddress').value;
             const option = document.querySelector('input[name="paymentOption"]:checked').value;
 
-            if (option === 'A') {
-                alert(`Thank you, ${name}! Your registration data has been safely logged. Show proof of payment transaction on the venue, Official receipt invoice will be delivered to: ${email}`);
-            } else {
-                alert(`Registration confirmed, ${name}! Your entry code has been reserved. Please ensure to present this booking confirmation window at the desk inside Kuy's Restaurant to settle your payment.`);
+            const formData = {
+                fullName: name,
+                emailAddress: email,
+                paymentOption: option
+            };
+
+            try {
+                // Post data to Google Sheet
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Bypasses CORS limitations for Google Apps Script Web Apps
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // Trigger standard browser alert on completion
+                if (option === 'A') {
+                    alert(`Thank you, ${name}! Your registration data has been safely logged. Show proof of payment transaction on the venue, Official receipt invoice will be delivered to: ${email}`);
+                } else {
+                    alert(`Registration confirmed, ${name}! Your entry code has been reserved. Please ensure to present this booking confirmation window at the desk inside Kuy's Restaurant to settle your payment.`);
+                }
+
+                // Reset form post-submission
+                document.getElementById('registrationForm').reset();
+                document.getElementById('qrPanel').style.display = 'none';
+                document.getElementById('optionACard').classList.remove('selected');
+                document.getElementById('optionBCard').classList.remove('selected');
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('There was an issue processing your registration. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Confirm Registration';
             }
         }
     </script>
