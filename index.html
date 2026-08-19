@@ -404,7 +404,7 @@
         </div>
 
         <!-- Registration & Gateway Form -->
-        <form id="registrationForm" onsubmit="handleFormSubmit(event)">
+        <form id="registrationForm" onsubmit="submitRegistration(event)">
             <div class="form-group">
                 <label for="fullName">Full Name (For Certificate of Appreciation)</label>
                 <input type="text" id="fullName" required placeholder="e.g. John Doe">
@@ -501,17 +501,33 @@
             }
         }
 
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('fullName').value;
-            const email = document.getElementById('emailAddress').value;
-            const option = document.querySelector('input[name="paymentOption"]:checked').value;
+        const MAKE_WEBHOOK_URL =
+          "https://hook.eu1.make.com/4gh2qbb4s97pw4gvem2no2tak6ubly36";
 
-            if (option === 'A') {
-                alert(`Thank you, ${name}! Your registration data has been safely logged. Once our bank module validates your transaction, your official receipt invoice alongside your personalized Certificate of Appreciation will be delivered to: ${email}`);
-            } else {
-                alert(`Registration confirmed, ${name}! Your entry code has been reserved. Please ensure to present this booking confirmation window at the desk inside Kuy's Restaurant to settle your payment.`);
-            }
+        async function submitRegistration(event) {
+          event.preventDefault();
+
+          const payload = {
+            fullName: document.querySelector("#fullName").value.trim(),
+            emailAddress: document.querySelector("#emailAddress").value.trim(),
+            paymentOption: document.querySelector(
+              'input[name="paymentOption"]:checked'
+            ).value
+          };
+
+          const response = await fetch(MAKE_WEBHOOK_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error(`Submission failed: ${response.status}`);
+          }
+
+          alert("Registration submitted successfully.");
         }
     </script>
 </body>
